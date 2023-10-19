@@ -36,7 +36,7 @@
 ## Overview
 This document provides the technical specification for the SUAVE computor: one of the main protocol actors in the SUAVE protocol. The computor contains all necessary components to aceept, process, and route confidential compute requests and results. With these basic primitives computors can self-organize their topology and functionality to conform to specific portions of the MEV supply network.
 
-This document includes the expected behavior of an "honest computor" with respect to Rigil testnet version of the SUAVE protocol. This document does not distinguish between a "SUAVE computor" and a "SUAVE validator client". The separation of concerns between these two pieces of software is left as a design decision that is out of scope.
+This document includes the expected behavior of an "honest computor" with respect to the Rigil Testnet version of the SUAVE protocol. This document does not distinguish between a "SUAVE computor" and a "SUAVE validator client". The separation of concerns between these two pieces of software is left as a design decision that is out of scope.
 
 ## Prerequisites
 

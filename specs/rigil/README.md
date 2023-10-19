@@ -56,30 +56,33 @@ Read more about SUAVE:
 
 # Rigil Overview
 
-This set of specs proposes the Rigil Testnet, a continuation of the star system theme (Centauri, Andromeda, Helios) laid out in [The Future of MEV](https://writings.flashbots.net/mevm-suave-centauri-and-beyond); and the first in a series of SUAVE testnets based on stars in the [(Alpha) Centauri system](https://en.wikipedia.org/wiki/Alpha_Centauri): Rigil Kentaurus (Alpha Centauri A), Toliman (B) and Proxima Centauri (C).
+This set of specs proposes the Rigil Testnet, a continuation of the star system theme (Centauri, Andromeda, Helios) laid out in [SUAVE Centauri](https://writings.flashbots.net/mevm-suave-centauri-and-beyond). Rigil is the first in a series of SUAVE testnets based on stars in the [(Alpha) Centauri system](https://en.wikipedia.org/wiki/Alpha_Centauri): Rigil Kentaurus (Alpha Centauri A), Toliman (B) and Proxima Centauri (C).
 
-The Rigil Testnet is an experimental sandbox and foundation for building MEV applications in a decentralized and private manner. Applications built atop this platform gain access to encrypted orderflow and process it using confidential computation and data storage. This empowers stakeholders to articulate the intricate facets of the MEV supply chain pertinent to their order flow as smart contracts written in solidity. Catering to a diverse set of players, from developers and users to proposers, sequencers, and block builders, this testnet facilitates the design and governance of smart contracts on the SUAVE Chain, which define these MEV application rules. Rigil's key features comprise fostering a market for mechanism designs, replicating the SGX user experience, and Proof-of-Authority consensus to allow for rapid prototyping. 
+The Rigil Testnet is an experimental sandbox for building MEV applications in a decentralized and private manner. MEV applications access sensitive data - like encrypted orderflow - and process it using confidential computation and data storage. This empowers any participant in the transaction supply network to express the intricate facets of their interaction with MEV as smart contracts written in solidity. 
 
-The network's architecture is composed of SUAVE Computors for confidential computation, the Confidential Data Store for secure and private storage, a blockchain to store MEV application rules and transparent dissemination of public data, and the MEVM, a modified EVM that exposes confidential execution and storage APIs to deevlopers. Rigil's core objective remains clear: to ensure sensitive data remains offchain unless intentionally programmed, and directing such data efficiently across all SUAVE computors, thus optimizing bundle and block construction throughout the network.
+SUAVE is intended to cater to a diverse set of players: from developers and users, to proposers, sequencers, and block builders. The specific focus of the Rigil Testnet is to provide an experimental venue for rapidly prototyping MEV applications in the form of smart contracts. The Rigil Testnet uses Clique Proof-of-Authority consensus to facilitate such rapid prototyping, and includes some low-level features intended to replicate the SGX user experience so that future testnets which do include nodes running in SGX do not introduce unexpected complexity.
 
+The network's architecture is composed of SUAVE Computors for confidential computation; a Confidential Data Store for secure and private storage; the SUAVE chain for storing MEV application rules and sharing public data transparently; and the MEVM, a modified EVM that exposes confidential execution and storage APIs to developers. 
+
+The core objective of the Rigil Testnet is to **ensure sensitive data remains confidential unless intentionally programmed to be public**, and to direct such data efficiently across all SUAVE computors, thus optimizing bundle and block construction throughout the network.
 
 ## Users
 
 The Rigil testnet is initially focused on a specific set of actors:
 
-1. **Developers** - create smart contracts on SUAVE Chain that define rules for MEV applications like orderflow auctions and block building. Smart contracts deployed by developers can call special *precompiles* to request confidential computation.
+1. **Developers** - create smart contracts on SUAVE that define rules for MEV applications like orderflow auctions and block building. Smart contracts deployed by developers can call special *precompiles* to request confidential computation.
 2. **Users** - send requests/transactions to SUAVE. Such transaction can include confidential data.
 3. **Proposers/Sequencers** - extend another blockchain with a new block.
-4. **Block Builders** - can be implemented as smart contracts inside Suave. In the Rigil Tesnet, Suave has the capability to submit bundles to several external builders to help transaction inclusion during early stages of development.
-5. **Auctions** - L1 Transactions, EIP 712 signed messages, UserOps, the right to update an oracle, and more can be programmably auctioned and utilize privacy primitives.
+4. **Block Builders** - can be implemented as smart contracts on Suave. In the Rigil Tesnet, contracts on SUAVE can submit bundles to several external builders to help transaction inclusion during early stages of development.
+5. **Auctions** - L1 Transactions, EIP 712 signed messages, UserOps, the right to update an oracle, and more can be programmably auctioned utilizing privacy primitives.
 5. **Solvers** - upload solver code to the chain and plug into encrypted orderflow, or monitor the chain and submit solutions based on emitted logs.
 
 </div>
 
 ## Rigil Design Goals
 
-1. **Market for Mechanisms** - Enable permissionless innovation by allowing anyone to deploy mechanisms as smart contracts and allowing users of those mechanisms to choose from a market of options.
-2. **SGX UX Closeness** - Get as close to SGX user experience as possible and minimize breaking changes down the road.
+1. **Market for Mechanisms** - Permissionless deployment of smart contracts, coupled with illuminating education and tooling, such that a competitive marketplace of mechanisms for processing senstivie data emerges.
+2. **SGX UX Closeness** - Get as close to SGX user experience as possible to minimize breaking changes in later test networks.
 
 
 ## Design Decisions
@@ -87,13 +90,13 @@ The Rigil testnet is initially focused on a specific set of actors:
 Here is a list of design decisions made for the Rigil testnet and associated reasoning:
 
 - Decision *1*: **Proof-of-Authority Consensus**
-    - *reason*: [SUAVE consensus](https://collective.flashbots.net/t/suave-consensus/2152) is an active open question, which whether or not answered does not drastically impact UX of users on **Rigil Testnet**.
+    - Reason: [SUAVE consensus](https://collective.flashbots.net/t/suave-consensus/2152) is an active open question, which (answered now or later) does not drastically impact the UX.
 - Decision *2*: **No SGX Nodes (yet)**
-    - reason: SGX SUAVE computors are an active area of research and development and does not drastically impact UX of users on **Rigil Testnet**.
+    - Reason: SGX SUAVE computors are an active area of research and development and do not drastically impact the UX.
 - Decision *3*: **Weak DA Layer Guarantees**
-    - Reason: The Confidential Data Store currently only keeps private data available for one day. [Compute Output Validity and Heterogenous DA](https://collective.flashbots.net/t/suave-ensuring-output-validity-and-heterogenous-da/2184) are active open questions, which whether or not answered does not drastically impact UX on Rigil Testnet.
+    - Reason: The Confidential Data Store currently only keeps private data available for one day. [Compute Output Validity and Heterogenous DA](https://collective.flashbots.net/t/suave-ensuring-output-validity-and-heterogenous-da/2184) are active open questions, which (answered now or later) do not drastically impact the UX.
 - Decision *4*: **Centralized Builder Interoperability**
-    - reason: Blocks emitted from SUAVE computors will have unpredictable inclusion in early development so SUAVE rigil supports a precompile to send bundles to off-SUAVE block builders.
+    - Reason: Blocks emitted from SUAVE computors will have unpredictable inclusion in early development, so the Rigil Testnet supports a precompile to send bundles to off-SUAVE block builders.
 
 
 ## Architecture
@@ -106,18 +109,22 @@ SUAVE Computors house all components necessary to perform confidential compute a
     1. a wrapped transaction
     2. confidential data, and
     3. a list of programs (contracts) allowed to access and operate on confidential data.
-- **Computor[**[🔗spec](./computor.md)**]**: accepts and processes confidential compute requests and maintains the SUAVE chain; the logical unit of the SUAVE network and main protocol actor.
 - **Confidential Data Store (CDS) [**[🔗spec](./confidential-data-store.md)**]**: stores confidential data from MEV applications (L1 transactions, EIP 712 signed messages, userOps, privateKeys(?), etc).
-- **SUAVE Chain [**[🔗spec](./suave-chain.md)**]**: a fork of Ethereum designed for usage alongside credible off-chain execution in MEV use cases. Running Clique PoA consensus for the Rigil Testnet.
-- **MEVM [**[🔗spec](./mevm.md)**]**: modified EVM with MEV-specific precompiles that allow developers to define orderflow auctions and builder rules as smart contracts written in Solidity.
-- **Precompiles [**[🔗spec](./precompiles.md)**]:** purpose-built functions with extended capabilities that can be called from Builder Solidity
-- **MEV Application :** MEVM compatible Solidity which defines how orderflow should be processed and routed.
+- **SUAVE Chain [**[🔗spec](./suave-chain.md)**]**: a fork of Ethereum designed to be used alongside credible off-chain execution for MEV applications. Running Clique PoA consensus for the Rigil Testnet.
+- **MEVM [**[🔗spec](./mevm.md)**]**: modified EVM with MEV-specific precompiles that allow developers to define orderflow auctions and builder rules as smart contracts.
+- **MEV Application:** MEVM compatible smart contract which defines how sensitive data should be processed and routed.
+- **Computor[**[🔗spec](./computor.md)**]**: accepts and processes confidential compute requests and maintains the SUAVE chain; the logical unit of the SUAVE network and main protocol actor.
+- **Precompiles [**[🔗spec](./precompiles.md)**]:** purpose-built functions with extended capabilities that can be called from Builder Solidity.
 
 
 ## How To Use SUAVE?
-- Deploy confidential smart contracts. Smart contracts on SUAVE follow the same rules as on Ethereum with the added advantage of being able to access additional precompiles during confidential execution. Precompiles are available through the SUAVE library.
 
-- Request confidential execution using the new confidential computation request. Contracts called using confidential compute requests have access to confidential data and APIs through SUAVE precompiles. Confidential computation is not reproducible on-chain, thus, users are required to whitelist a specific execution node trusted to provide the result. Eventually proofs and trusted enclaves will help to verify the results of execution. After the initial confidential computation, its result replaces the calldata for on-chain execution. This grants different behaviors to confidential computation and regular on-chain transactions since confidential APIs are inaccessible during regular chain state transition.
+1. **Deploy confidential smart contracts.** 
+    - Smart contracts on SUAVE follow the same rules as on Ethereum with the added advantage of being able to access additional precompiles during confidential execution. Precompiles are available through the SUAVE library.
+
+2. **Request confidential execution using the new confidential computation request.** 
+    - Contracts called using confidential compute requests have access to confidential data and APIs through SUAVE precompiles. Confidential computation is not reproducible on-chain, thus, users are required to whitelist a specific execution node trusted to provide the result. Eventually, proofs and trusted enclaves will help to verify the results of execution. 
+    - After the initial confidential computation, the result replaces the calldata for on-chain execution. This grants different behaviors to confidential computation and regular on-chain transactions, since confidential APIs are inaccessible during regular chain state transition.
 
 ## Example Flows
 
@@ -131,7 +138,7 @@ Below we can see the journey of orderflow from transaction, to searcher back-run
 
 1. A user sends their L1 transaction, EIP-712 message, UserOp, or Intent into a SUAVE computor.
 2. MEVM processes this L1 transaction, extracts a hint, and emits it onchain.
-3. Searchers listening to the chain see the hint, craft a backrun transactions, and send them to a SUAVE computor.
+3. Searchers listening to the chain see the hint, craft backrun transactions, and send them to a SUAVE computor.
 4. SUAVE computors will process the backrun, combine it into a bundle with the original transaction, include the bundle in a block, and then emit the block to an offchain relay.
 
 *Optionally*, bundles can be sent straight to a centralized block builder, or the block can also be sent to an onchain relay instead of offchain.
@@ -145,8 +152,8 @@ The diagram below showcases how these different types interact to enable confide
 ![Rigil transaction flow](/assets/rigil-tx-flow.svg)
 
 Transaction Flow:
-1. User sends a Confidential Compute Request to the RPC - Confidential Compute Requests are made up of two components, Compute Transaction and Confidential Inputs. The Compute request will reference data inside of the Confidential Inputs that the MEVM is able to use during computation.
-2. Once the RPC receives the Confidential Compute Request, it will extract the confidential inputs and send them to the confidential data store. It will then send the Compute Request to the MEVM to process.
+1. User sends a Confidential Compute Request (CCR) to the RPC. Confidential Compute Requests are made up of two components: a Compute Transaction and Confidential Inputs. The CCR will reference data in the Confidential Inputs that the MEVM is able to use during computation.
+2. Once the RPC receives the Confidential Compute Request, it will extract data from the Confidential Inputs and send them to the Confidential Data Store. It will then send the CCR to the MEVM to process.
 3. Confidential Compute Phase - During this phase the MEVM will process the compute transaction similar to an EVM transaction except it will also have access to the confidential inputs. After doing the initial computation with the confidential data, it will then grab the results and information from the Compute Transaction and put them into their final home a SUAVE transaction.
 4. Block Inclusion - Once the SUAVE transaction has been created it will then quickly be included in a block by a SUAVE proposer.
 
